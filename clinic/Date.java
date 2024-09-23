@@ -11,6 +11,12 @@ public class Date implements Comparable<Date> {
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
 
+    public Date (int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     //check if the date is a valid calendar date
     // THIS METHOD IS STILL IN PROGRESS
     public boolean isValid() {
@@ -23,31 +29,36 @@ public class Date implements Comparable<Date> {
         int dayToday = calendar.get(Calendar.DAY_OF_MONTH);
 
         // checking if it is a valid calendar date
+        // do this in separate method
         if (this.month<1 || this.month>12) {
             return false;
         }
 
         // add return statement checking all helper method calls
-
+        return !(isToday()) && !(isBeforeToday()) && !(onWeekend()) && (isWithinSixMonths());
     }
+
+    // HELPER METHOD 0: checking if it is an invalid calendar date
 
 
     // HELPER METHOD 1: checking if the year is a leap year
     public boolean isLeapYear() {
         boolean leapYearCheck;
         if (this.year%QUADRENNIAL==0) {
-            return false;
-        }
-        else if (this.year%CENTENNIAL==0) {
-            if (this.year%QUATERCENTENNIAL==0) {
-                return false;
+            if (this.year%CENTENNIAL==0) {
+                if (this.year%QUATERCENTENNIAL==0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             else {
                 return true;
             }
         }
         else {
-            return true;
+            return false;
         }
     }
 
@@ -64,16 +75,16 @@ public class Date implements Comparable<Date> {
     public boolean isBeforeToday() {
 
         if (this.year<Calendar.YEAR) {
-            return false;
+            return true;
         }
         else if (this.month<Calendar.MONTH) {
-            return false;
+            return true;
         }
         else if (this.day<Calendar.DAY_OF_MONTH){
-            return false;
+            return true;
         }
         // if all these if statements are false that means the date is after the current date so we return true
-        return true;
+        return false;
     }
 
     // HELPER METHOD 4: checking if the date is on a saturday or sunday
@@ -90,7 +101,7 @@ public class Date implements Comparable<Date> {
     public boolean isWithinSixMonths() {
         // creating an appointment date with this object's year, month, and day
         Calendar appointmentDate = new Calendar.Builder()
-           .setDate(this.year, this.month - 1+6, this.day)
+           .setDate(this.year, this.month - 1, this.day)
                     .build();
         // creating an appointment date 6 months from now
         Calendar sixMonthsLater = new Calendar.Builder()
@@ -102,21 +113,34 @@ public class Date implements Comparable<Date> {
     // REMEMBER TO INCLUDE TESTBED MAIN HERE!
 
     @Override
-    public int compareTo(Date o) { // in which unit should this return
+    public int compareTo(Date o) { // in which unit should this return, years, months or days?
         int yearComparison = this.year - o.year;
         int monthComparison = this.month - o.month;
         int dayComparison = this.day - o.day;
 
-        if (yearComparison!=0) {
-            return yearComparison;
+        if (yearComparison>0) {
+            return 1;
+        }
+        else if (yearComparison<0) {
+            return -1;
         }
 
-        if (monthComparison!=0) {
-            return monthComparison;
+        if (monthComparison>0) {
+            return 1;
+        }
+        else if (monthComparison<0) {
+            return -1;
         }
 
         // if the year and month are both equal, then we return the difference in the days
-        return dayComparison;
+        if (dayComparison>0) {
+            return 1;
+        }
+        else if (dayComparison<0) {
+            return -1;
+        }
+
+        return 0;
     }
 
     @Override
@@ -129,7 +153,6 @@ public class Date implements Comparable<Date> {
                     && this.month==dateEx.month
                     && this.day==dateEx.day;
         }
-
         return false;
     }
 

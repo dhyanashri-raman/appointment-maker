@@ -6,8 +6,17 @@ public class Appointment implements Comparable <Appointment> {
     private Profile patient;
     private Provider provider;
 
+    // Constructor
+    // Do we have to check to make sure input is right primitive type?
+    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider) {
+        this.date = date;
+        this.timeslot = timeslot;
+        this.patient = patient;
+        this.provider = provider;
+    }
+
     @Override
-    public int compareTo(Appointment o) { // which instance variable should we compare for this method?
+    public int compareTo(Appointment o) { // ASK ABOUT THIS
         int dateComparison = this.date.compareTo(o.date);
 
         // if the timeslot and date and both equal, that means they are the same appointment!
@@ -36,7 +45,7 @@ public class Appointment implements Comparable <Appointment> {
 
     @Override
     public String toString() {
-        return this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
+        return "Date: " + this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
     }
 
 }
