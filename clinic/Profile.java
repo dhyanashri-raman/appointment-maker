@@ -52,7 +52,7 @@ public class Profile implements Comparable<Profile> {
     }
     //testbed main method for testing compareTo
     public static void main(String[] args) {
-        Date date1 = new Date();
+        Date date1 = new Date(2003, 11, 20);
         Profile profile1 = new Profile("John", "Doe", date1);
     }
 }

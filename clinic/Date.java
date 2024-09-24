@@ -35,11 +35,37 @@ public class Date implements Comparable<Date> {
         }
 
         // add return statement checking all helper method calls
-        return !(isToday()) && !(isBeforeToday()) && !(onWeekend()) && (isWithinSixMonths());
+        return (isValidDate()) && !(isToday()) && !(isBeforeToday()) && !(onWeekend()) && (isWithinSixMonths());
     }
 
     // HELPER METHOD 0: checking if it is an invalid calendar date
+    public boolean isValidDate(){
+        // check the months that are 30 days
+        // check the months that are leap years
+        // check the months that are 31 days
+        // make sure month is between 1 and 12
+        // make sure day is >=1
 
+        if(this.year < 0 || (this.month < 0 || this.month > 12) || this.day < 0){
+            return false;
+        }
+        else {
+            if(this.month == 2 && isLeapYear() && this.day > 29) {
+                return false;
+            }
+            else if(this.month == 2 && !isLeapYear() && this.day > 28) {
+                return false;
+            }
+
+            if(this.day > 31 && (this.month == 1 || this.month == 3 || this.month == 5 || this.month == 7 || this.month == 8 || this.month == 10 || this.month == 12)) {
+                return false;
+            }
+            if(this.day > 30 && (this.month == 4 || this.month == 6 || this.month == 9 || this.month == 11)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     // HELPER METHOD 1: checking if the year is a leap year
     public boolean isLeapYear() {
