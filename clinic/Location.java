@@ -15,4 +15,8 @@ public enum Location {
         this.county = county;
         this.zip = zip;
     }
+
+    public String getCounty () {
+        return county;
+    }
 }

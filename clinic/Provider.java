@@ -17,4 +17,8 @@ public enum Provider {
         this.location = location;
         this.specialty = specialty;
     }
+
+    public Location getLocation() {
+        return location;
+    }
 }

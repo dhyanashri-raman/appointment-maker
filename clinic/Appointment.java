@@ -5,14 +5,16 @@ public class Appointment implements Comparable <Appointment> {
     private Timeslot timeslot; // will the timeslot be in military time because there is no mention of AM or PM?
     private Profile patient;
     private Provider provider;
+    private Location location;
 
     // Constructor
     // Do we have to check to make sure input is right primitive type?
-    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider) {
+    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider, Location location) {
         this.date = date;
         this.timeslot = timeslot;
         this.patient = patient;
         this.provider = provider;
+        this.location = location;
     }
 
     @Override
@@ -26,6 +28,31 @@ public class Appointment implements Comparable <Appointment> {
         }
 
         return dateComparison; // if the timeslots are not the same, it'll return int difference in dates
+    }
+
+    public int compareByLocation(Appointment o) {
+        // comparing the counties first
+        int locationComparison = this.location.getCounty().compareTo(o.provider.getLocation().getCounty());
+
+        // if the timeslot and date and both equal, that means they are the same appointment!
+        if (locationComparison == 0) {
+            int timeslotComparison = this.timeslot.compareTo(o.timeslot); // is this because i didnt make Timeslot class yet?
+            return timeslotComparison;
+        }
+
+        return locationComparison; // if the timeslots are not the same, it'll return int difference in dates
+    }
+
+    public int compareByAppointment(Appointment o) { // ASK ABOUT THIS
+        int timeslotComparison = this.date.compareTo(o.date);
+
+        // if the timeslot and date and both equal, that means they are the same appointment!
+        if (timeslotComparison == 0) {
+            int providerComparison = this.provider.compareTo(o.provider); // is this because i didnt make Timeslot class yet?
+            return providerComparison;
+        }
+
+        return timeslotComparison; // if the timeslots are not the same, it'll return int difference in dates
     }
 
     @Override
