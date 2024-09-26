@@ -17,27 +17,6 @@ public class Date implements Comparable<Date> {
         this.day = day;
     }
 
-    //check if the date is a valid calendar date
-    // THIS METHOD IS STILL IN PROGRESS
-    public boolean isValid() {
-        // Calendar object with current date and time
-        Calendar calendar = Calendar.getInstance();
-        calendar.setLenient(false);
-
-        int yearToday = calendar.get(Calendar.YEAR);
-        int monthToday = calendar.get(Calendar.MONTH) + 1; // Month is zero-based so add 1
-        int dayToday = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // checking if it is a valid calendar date
-        // do this in separate method
-        if (this.month<1 || this.month>12) {
-            return false;
-        }
-
-        // add return statement checking all helper method calls
-        return (isValidDate()) && !(isToday()) && !(isBeforeToday()) && !(onWeekend()) && (isWithinSixMonths());
-    }
-
     // HELPER METHOD 0: checking if it is an invalid calendar date
     public boolean isValidDate(){
         // check the months that are 30 days
@@ -46,9 +25,12 @@ public class Date implements Comparable<Date> {
         // make sure month is between 1 and 12
         // make sure day is >=1
 
+        // checking to make sure year, month and day inputs are greater than 1
         if(this.year < 0 || (this.month < 0 || this.month > 12) || this.day < 0){
             return false;
         }
+        // checking to make sure all months with 31 days are <31, and same for months with 30 days
+        // also making sure if there is a leap year that february has 29 days and if not, 28
         else {
             if(this.month == 2 && isLeapYear() && this.day > 29) {
                 return false;
@@ -185,5 +167,9 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString() { // not sure if this is correct
         return this.month + "/" + this.day + "/" + this.year; // MM/DD/YY format
+    }
+
+    public static void main(String[] args) {
+
     }
 }

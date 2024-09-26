@@ -21,7 +21,7 @@ public class Appointment implements Comparable <Appointment> {
 
         // if the timeslot and date and both equal, that means they are the same appointment!
         if (dateComparison == 0) {
-            int timeslotComparison = this.timeslot.compareTo(o.timeslot); // why is that warning there?
+            int timeslotComparison = this.timeslot.compareTo(o.timeslot); // is this because i didnt make Timeslot class yet?
             return timeslotComparison;
         }
 
@@ -46,6 +46,10 @@ public class Appointment implements Comparable <Appointment> {
     @Override
     public String toString() {
         return "Date: " + this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
+    }
+
+    public static void main(String [] args) {
+        
     }
 
 }
