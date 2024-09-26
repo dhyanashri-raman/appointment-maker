@@ -58,10 +58,7 @@ public class List {
     // sorting using the compareTo method ascending - ask about this just in case
     public void printByPatient() {
         //we need to use the compareTo method in profile to compare the values
-        boolean didSwap;
-
         for (int i=0; i<appointments.length-1; i++) {
-            didSwap = false;
             for (int j = 0; j < i-1; j++) {
                 if (appointments[j].compareTo(appointments[j+1])>0) {
                     Appointment temp = appointments[j];
