@@ -15,6 +15,7 @@ public class Visit {
 
     public Appointment getAppointment () {
         return appointment;
+        //comment
     }
 
     public Visit getVisit () {
