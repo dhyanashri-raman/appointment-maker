@@ -4,6 +4,12 @@ public class List {
     private Appointment[] appointments;
     private int size; //number of appointments in the array
     int NOT_FOUND = -1;
+
+    public List() {
+        appointments = new Appointment[4];
+        size = 0;
+    }
+
     private int find(Appointment appointment) {
         //helper method
         for (int i =0; i<appointments.length; i++) {
