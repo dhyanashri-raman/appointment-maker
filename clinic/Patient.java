@@ -11,7 +11,9 @@ public class Patient implements Comparable<Patient> {
 
     @Override
     public int compareTo(Patient patient) {
+        if this.profile.equals(patient.profile) {
 
+        }
     }
 
     @Override
@@ -20,7 +22,7 @@ public class Patient implements Comparable<Patient> {
     }
 
     @Override
-    public String equals(Patient patient) {
+    public String toString(Patient patient) {
 
     }
 
@@ -30,7 +32,7 @@ public class Patient implements Comparable<Patient> {
         Visit todaysVisit = this.visits;
 
         while (todaysVisit!=null) {
-            totalCharge += todaysVisit.getAppointment().getProvider().getCharge();
+            totalCharge += todaysVisit.getAppointment().getCharge();
             todaysVisit = todaysVisit.next;
         }
         return totalCharge;
