@@ -52,7 +52,7 @@ public class Patient implements Comparable<Patient> {
         Visit todaysVisit = this.visits;
 
         while (todaysVisit!=null) {
-            totalCharge += todaysVisit.getAppointment().getCharge();
+            totalCharge += todaysVisit.getAppointment().getSpecialty().getCharge();
             todaysVisit = todaysVisit.getVisit();
         }
         return totalCharge;

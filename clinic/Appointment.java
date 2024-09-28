@@ -6,15 +6,17 @@ public class Appointment implements Comparable <Appointment> {
     private Profile patient;
     private Provider provider;
     private Location location;
+    private Specialty specialty;
 
     // Constructor
     // Do we have to check to make sure input is right primitive type?
-    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider, Location location) {
+    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider, Location location, Specialty specialty) {
         this.date = date;
         this.timeslot = timeslot;
         this.patient = patient;
         this.provider = provider;
         this.location = location;
+        this.specialty = specialty;
     }
 
     @Override
@@ -73,6 +75,11 @@ public class Appointment implements Comparable <Appointment> {
     @Override
     public String toString() {
         return "Date: " + this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
+    }
+
+    public Specialty getSpecialty()
+    {
+        return this.specialty;
     }
 
     public static void main(String [] args) {

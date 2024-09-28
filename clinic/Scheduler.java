@@ -49,19 +49,19 @@ public class Scheduler {
             Timeslot slot1 = Timeslot.SLOT1;
         }
         else if (time==2) {
-            Timeslot slot1 = Timeslot.SLOT2;
+            Timeslot slot2 = Timeslot.SLOT2;
         }
         else if (time==3) {
-            Timeslot slot1 = Timeslot.SLOT3;
+            Timeslot slot3 = Timeslot.SLOT3;
         }
         else if (time==4) {
-            Timeslot slot1 = Timeslot.SLOT4;
+            Timeslot slot4 = Timeslot.SLOT4;
         }
         else if (time==5) {
-            Timeslot slot1 = Timeslot.SLOT5;
+            Timeslot slot5 = Timeslot.SLOT5;
         }
         else if (time==6) {
-            Timeslot slot1 = Timeslot.SLOT6;
+            Timeslot slot6 = Timeslot.SLOT6;
         }
 
         String firstName = splittedInput[3];
