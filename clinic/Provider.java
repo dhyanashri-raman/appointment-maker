@@ -21,4 +21,7 @@ public enum Provider {
     public Location getLocation() {
         return location;
     }
+    public Specialty getSpecialty(){
+        return specialty;
+    }
 }
