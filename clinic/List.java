@@ -39,14 +39,17 @@ public class List {
     }
     public void add(Appointment appointment)  {
         //make sure the array is not full yet
-        if(size != appointments.length) {
-            appointments[size] = appointment;
-            size++;
-        }
-        else
-        {
-            grow();
-            add(appointment);
+        //make sure the appointment is not taken
+        if(!appointments.contains(appointment)) {
+            if(size != appointments.length) {
+                appointments[size] = appointment;
+                size++;
+            }
+            else
+            {
+                grow();
+                add(appointment);
+            }
         }
     }
     public void remove(Appointment appointment) {

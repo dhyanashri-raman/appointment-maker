@@ -11,7 +11,7 @@ public class Patient implements Comparable<Patient> {
 
     @Override
     public int compareTo(Patient patient) {
-        if this.profile.equals(patient.profile) {
+        if this.profile.compareTo(patient.profile) {
 
         }
     }
