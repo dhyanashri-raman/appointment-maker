@@ -10,7 +10,6 @@ public enum Specialty {
     Specialty (int charge) {
         this.charge = charge;
     }
-
     public int getCharge() {
         return charge;
     }
