@@ -11,19 +11,39 @@ public class Patient implements Comparable<Patient> {
 
     @Override
     public int compareTo(Patient patient) {
-        if this.profile.equals(patient.profile) {
-
+        if (this.profile.compareTo(patient.profile) == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return this.profile.compareTo(patient.profile);
         }
     }
 
     @Override
-    public boolean equals(Patient patient) {
+    public boolean equals(Object patient) {
+        if(patient instanceof Profile)
+        {
+            Patient newPatient = (Patient) patient;
+            return this.profile.equals(newPatient.profile);
 
+        }
+        return false;
     }
 
     @Override
-    public String toString(Patient patient) {
+    public String toString() {
+        //list out all the appointments in visit
+        Visit currVisitNode = this.visits;
+        String appts = "";
+        while (currVisitNode != null)
+        {
+            appts += currVisitNode.getAppointment().toString() + "\n";
+            currVisitNode = currVisitNode.getVisit();
 
+        }
+        return appts;
     }
 
     //traverse the linked list to compute the charge
@@ -33,7 +53,7 @@ public class Patient implements Comparable<Patient> {
 
         while (todaysVisit!=null) {
             totalCharge += todaysVisit.getAppointment().getCharge();
-            todaysVisit = todaysVisit.next;
+            todaysVisit = todaysVisit.getVisit();
         }
         return totalCharge;
     }
