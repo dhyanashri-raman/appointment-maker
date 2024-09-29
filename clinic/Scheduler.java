@@ -169,7 +169,7 @@ public class Scheduler {
         {
             int inptApp = appts.identifyAppointment(profile, date, timeslot1);
             Appointment currApp = appts.getAppointment(inptApp);
-            Appointment appointment = new Appointment(currApp.getDate(), currApp.getTimeslot(), currApp.getProfile(), currApp.getProvider());
+            Appointment appointment = new Appointment(currApp.getDate(), currApp.getTimeslot(), currApp.getProfile(), currApp.getProvider(), currApp.getLocation(), currApp.getSpecialty());
             appts.remove(appointment);
             return "Appointment Removed";
         }
