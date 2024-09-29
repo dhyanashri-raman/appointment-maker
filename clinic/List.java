@@ -10,11 +10,16 @@ public class List {
         size = 0;
     }
 
-    private int find(Appointment appointment) {
+    // finding appointment based on profile and date
+    private int find(Profile profile, Date date) {
         //helper method
         for (int i =0; i<appointments.length; i++) {
-            if (appointments[i].equals(appointment)) {
-                return i;
+            if (appointments[i].getProfile().equals(profile)) {
+                if (appointments[i].getDate().equals(date)) {
+                    if (appointments[i].getTimeslot().equals(appointments.getTimeslot())) {
+                        return i;
+                    }
+                }
             }
         }
         return NOT_FOUND;
@@ -76,6 +81,10 @@ public class List {
                 }
             }
         }
+
+        for (int i=0; i<appointments.length; i++) {
+            System.out.print(appointments[i] + ", ");
+        }
     }
     //ordered by county, date/timeslot
     public void printByLocation() {
@@ -92,6 +101,10 @@ public class List {
                 }
             }
         }
+
+        for (int i=0; i<appointments.length; i++) {
+            System.out.print(appointments[i] + ", ");
+        }
     }
     //ordered by date/timeslot, provider name
     public void printByAppointment() {
@@ -107,6 +120,20 @@ public class List {
                     appointments[j + 1] = temp;
                 }
             }
+        }
+
+        for (int i=0; i<appointments.length; i++) {
+            System.out.print(appointments[i] + ", ");
+        }
+    }
+
+    public void printByStatement() {
+        for (int i=0; i<appointments.length-1; i++) {
+            appointments[i].getProfile().getCharge();
+        }
+
+        for (int i=0; i<appointments.length; i++) {
+            System.out.print(appointments[i] + ", ");
         }
     }
 }

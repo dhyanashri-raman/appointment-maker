@@ -47,7 +47,7 @@ public class Patient implements Comparable<Patient> {
     }
 
     //traverse the linked list to compute the charge
-    public int charge() {
+    public int getTotalCharge() {
         int totalCharge = 0;
         Visit todaysVisit = this.visits;
 
