@@ -76,14 +76,18 @@ public class List {
         }
     }
     public void remove(Appointment appointment) {
-        for(int i = 0; i < size; i++)
-        {
-            if (appointments[i].equals(appointment))
-            {
-                appointments[i] = null;
-                size--;
-            }
-        }
+       if(contains(appointment))
+       {
+           for(int i = 0; i < size; i++)
+           {
+               if (appointments[i].equals(appointment))
+               {
+                   appointments[i] = null;
+                   size--;
+               }
+           }
+       }
+
 
     }
     //ordered by patient profile, date/timeslot

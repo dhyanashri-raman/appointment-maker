@@ -77,8 +77,8 @@ public class Appointment implements Comparable <Appointment> {
         return "Date: " + this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
     }
 
-    public Timeslot getTimeslot() {
-        return this.timeslot;
+    public void setTimeslot(Timeslot timeslot) {
+        this.timeslot = timeslot;
     }
 
     public Profile getProfile() {
@@ -90,8 +90,8 @@ public class Appointment implements Comparable <Appointment> {
         return this.date;
     }
 
-    public void setTimeslot(Timeslot timeslot) {
-        this.timeslot = timeslot;
+    public Timeslot getTimeslot() {
+        return this.timeslot;
     }
 
     public Provider getProvider() {
