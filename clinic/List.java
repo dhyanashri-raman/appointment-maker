@@ -148,17 +148,18 @@ public class List {
     //CHECK
     public void printByStatement() {
         for (int i=0; i<appointments.length-1; i++) {
-            appointments[i].getProfile().getCharge();
+            appointments[i].getProfile().getPatient().getTotalCharge();
         }
 
-        for (int i= 0; i<appointments.length-1; i++) {
-
-        }
-        //DELETE THIS
 
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
         }
+
+        System.out.println("Patient: " + patient.toString());
+            System.out.println("Total Charge: $" + patient.getTotalCharge());
+            System.out.println("--------------------------------");
+
 
     }
 }
