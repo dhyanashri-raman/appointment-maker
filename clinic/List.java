@@ -63,7 +63,7 @@ public class List {
     public void add(Appointment appointment)  {
         //make sure the array is not full yet
         //make sure the appointment is not taken
-        if(!appointments.contains(appointment)) {
+        if(!contains(appointment)) {
             if(size != appointments.length) {
                 appointments[size] = appointment;
                 size++;
@@ -107,10 +107,7 @@ public class List {
     //ordered by county, date/timeslot
     public void printByLocation() {
         //we need to use the compareTo method in profile to compare the values
-        boolean didSwap;
-
         for (int i=0; i<appointments.length-1; i++) {
-            didSwap = false;
             for (int j = 0; j < i-1; j++) {
                 if (appointments[j].compareByLocation(appointments[j+1])>0) {
                     Appointment temp = appointments[j];
@@ -143,23 +140,5 @@ public class List {
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
         }
-    }
-
-    //CHECK
-    public void printByStatement() {
-        for (int i=0; i<appointments.length-1; i++) {
-            appointments[i].getProfile().getPatient().getTotalCharge();
-        }
-
-
-        for (int i=0; i<appointments.length; i++) {
-            System.out.print(appointments[i] + ", ");
-        }
-
-        System.out.println("Patient: " + patient.toString());
-            System.out.println("Total Charge: $" + patient.getTotalCharge());
-            System.out.println("--------------------------------");
-
-
     }
 }
