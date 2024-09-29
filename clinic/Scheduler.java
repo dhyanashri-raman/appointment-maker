@@ -29,9 +29,8 @@ public class Scheduler {
             else if (splittedInput[0].equals("PL")) {
                 appts.printByLocation();
             }
-            // FIGURE OUT THIS ONE
             else if (splittedInput[0].equals("PS")) {
-                appts.getProfile().getTotalCharge();
+                appts.getAppointmentgetProfile().getTotalCharge();
             }
             input = in.nextLine();
             splittedInput = input.split(",");
