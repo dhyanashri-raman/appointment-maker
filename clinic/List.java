@@ -11,7 +11,7 @@ public class List {
     }
 
     private int find(Appointment appointment) {
-        for (int i = 0; i<appointments.length; i++) {
+        for (int i = 0; i<size; i++) {
             if (appointments[i].equals(appointment)) {
                 return i;
             }
@@ -22,7 +22,7 @@ public class List {
     // finding appointment based on profile and date
     public int identifyAppointment(Profile profile, Date date, Timeslot timeslot) {
         //helper method
-        for (int i =0; i<appointments.length; i++) {
+        for (int i =0; i<size; i++) {
             if (appointments[i].getProfile().equals(profile)) {
                 if (appointments[i].getDate().equals(date)) {
                     if (appointments[i].getTimeslot().equals(timeslot)) {
@@ -90,7 +90,7 @@ public class List {
     // sorting using the compareTo method ascending - ask about this just in case
     public void printByPatient() {
         //we need to use the compareTo method in profile to compare the values
-        for (int i=0; i<appointments.length-1; i++) {
+        for (int i=0; i<size - 1; i++) {
             for (int j = 0; j < i-1; j++) {
                 if (appointments[j].compareTo(appointments[j+1])>0) {
                     Appointment temp = appointments[j];
@@ -100,14 +100,14 @@ public class List {
             }
         }
 
-        for (int i=0; i<appointments.length; i++) {
+        for (int i=0; i<size; i++) {
             System.out.print(appointments[i] + ", ");
         }
     }
     //ordered by county, date/timeslot
     public void printByLocation() {
         //we need to use the compareTo method in profile to compare the values
-        for (int i=0; i<appointments.length-1; i++) {
+        for (int i=0; i<size - 1; i++) {
             for (int j = 0; j < i-1; j++) {
                 if (appointments[j].compareByLocation(appointments[j+1])>0) {
                     Appointment temp = appointments[j];
@@ -117,7 +117,7 @@ public class List {
             }
         }
 
-        for (int i=0; i<appointments.length; i++) {
+        for (int i=0; i<size; i++) {
             System.out.print(appointments[i] + ", ");
         }
     }
@@ -126,7 +126,7 @@ public class List {
         //we need to use the compareTo method in profile to compare the values
         boolean didSwap;
 
-        for (int i=0; i<appointments.length-1; i++) {
+        for (int i=0; i<size-1; i++) {
             didSwap = false;
             for (int j = 0; j < i-1; j++) {
                 if (appointments[j].compareByAppointment(appointments[j+1])>0) {
@@ -137,13 +137,13 @@ public class List {
             }
         }
 
-        for (int i=0; i<appointments.length; i++) {
+        for (int i=0; i<size; i++) {
             System.out.print(appointments[i] + ", ");
         }
     }
 
     public int timeslotTaken(Provider provider, Timeslot timeslot) {
-        for (int i = 0; i<appointments.length; i++) {
+        for (int i = 0; i<size; i++) {
             if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot)) {
                 return i;
             }
@@ -152,7 +152,7 @@ public class List {
     }
 
     public boolean patientExists(Profile patient) {
-        for (int i = 0; i<appointments.length; i++) {
+        for (int i = 0; i<size; i++) {
             if (appointments[i].getProfile().equals(patient)) {
                 return false;
             }
