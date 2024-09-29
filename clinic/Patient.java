@@ -57,4 +57,8 @@ public class Patient implements Comparable<Patient> {
         }
         return totalCharge;
     }
+    for (int i=0; i<appointments.length; i++) {
+
+    }
+    // DELETE THIS
 }

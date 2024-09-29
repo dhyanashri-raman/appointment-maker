@@ -135,6 +135,7 @@ public class List {
         for (int i= 0; i<appointments.length-1; i++) {
 
         }
+        //DELETE THIS
 
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
