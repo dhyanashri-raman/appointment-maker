@@ -12,6 +12,31 @@ public class Profile implements Comparable<Profile> {
         this.dob = dob;
     }
 
+    public boolean dobValid() {
+        if (!this.dob.isValidDate()) {
+            return false;
+        }
+        else if (this.dob.isToday()) {
+            return false;
+        }
+        else if (this.dob.isFutureDate()) {
+            return false;
+        }
+        return true;
+    }
+
+    public String getFirstName() {
+        return this.fname;
+    }
+
+    public String getLastName() {
+        return this.lname;
+    }
+
+    public Date getDob() {
+        return this.dob;
+    }
+
     @Override
     public boolean equals(Object patientProfile)
     {
@@ -48,11 +73,12 @@ public class Profile implements Comparable<Profile> {
     @Override
     public String toString()
     {
-        return fname + " " + lname + " " + dob;
+        return fname + " " + lname + " " + dob.toString();
     }
     //testbed main method for testing compareTo
     public static void main(String[] args) {
         Date date1 = new Date(2003, 11, 20);
         Profile profile1 = new Profile("John", "Doe", date1);
     }
+
 }

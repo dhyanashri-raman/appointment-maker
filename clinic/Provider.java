@@ -24,4 +24,8 @@ public enum Provider {
     public Specialty getSpecialty(){
         return specialty;
     }
+
+    public String getProvider() {
+        return this.name();
+    }
 }

@@ -76,18 +76,14 @@ public class List {
         }
     }
     public void remove(Appointment appointment) {
-       if(contains(appointment))
-       {
-           for(int i = 0; i < size; i++)
-           {
-               if (appointments[i].equals(appointment))
-               {
-                   appointments[i] = null;
-                   size--;
-               }
-           }
-       }
-
+        for(int i = 0; i < size; i++)
+        {
+            if (appointments[i].equals(appointment))
+            {
+                appointments[i] = null;
+                size--;
+            }
+        }
 
     }
     //ordered by patient profile, date/timeslot
@@ -144,5 +140,23 @@ public class List {
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
         }
+    }
+
+    public int timeslotTaken(Provider provider, Timeslot timeslot) {
+        for (int i = 0; i<appointments.length; i++) {
+            if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean patientExists(Profile patient) {
+        for (int i = 0; i<appointments.length; i++) {
+            if (appointments[i].getProfile().equals(patient)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

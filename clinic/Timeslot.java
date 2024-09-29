@@ -15,4 +15,15 @@ public enum Timeslot {
         this.hour = hour;
         this.minute = minute;
     }
+
+    @Override
+    public String toString() {
+        if (hour>12) { //PM
+            return this.hour-12 + ":" + this.minute + "PM";
+        }
+        else { //AM
+            return this.hour + ":" + this.minute + "AM";
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
-// do alt 0 to open commit menu
-
 package clinic;
 
 public class RunProject1 {
+    public static void main(String[]args) {
+        new Scheduler().run();
+    }
 }

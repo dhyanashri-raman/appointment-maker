@@ -2,21 +2,16 @@ package clinic;
 
 public class Appointment implements Comparable <Appointment> {
     private Date date;
-    private Timeslot timeslot; // will the timeslot be in military time because there is no mention of AM or PM?
+    private Timeslot timeslot; 
     private Profile patient;
     private Provider provider;
-    private Location location;
-    private Specialty specialty;
 
     // Constructor
-    // Do we have to check to make sure input is right primitive type?
-    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider, Location location, Specialty specialty) {
+    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider) {
         this.date = date;
         this.timeslot = timeslot;
         this.patient = patient;
         this.provider = provider;
-        this.location = location;
-        this.specialty = specialty;
     }
 
     @Override
@@ -25,7 +20,7 @@ public class Appointment implements Comparable <Appointment> {
 
         // if the timeslot and date and both equal, that means they are the same appointment!
         if (dateComparison == 0) {
-            int timeslotComparison = this.timeslot.compareTo(o.timeslot); // is this because i didnt make Timeslot class yet?
+            int timeslotComparison = this.timeslot.compareTo(o.timeslot); 
             return timeslotComparison;
         }
 
@@ -34,18 +29,18 @@ public class Appointment implements Comparable <Appointment> {
 
     public int compareByLocation(Appointment o) {
         // comparing the counties first
-        int locationComparison = this.location.getCounty().compareTo(o.provider.getLocation().getCounty());
+        int locationComparison = this.provider.getLocation().getCounty().compareTo(o.provider.getLocation().getCounty());
 
         // if the timeslot and date and both equal, that means they are the same appointment!
         if (locationComparison == 0) {
-            int timeslotComparison = this.timeslot.compareTo(o.timeslot); // is this because i didnt make Timeslot class yet?
+            int timeslotComparison = this.timeslot.compareTo(o.timeslot); 
             return timeslotComparison;
         }
 
         return locationComparison; // if the timeslots are not the same, it'll return int difference in dates
     }
 
-    public int compareByAppointment(Appointment o) { // ASK ABOUT THIS
+    public int compareByAppointment(Appointment o) { 
         int timeslotComparison = this.date.compareTo(o.date);
 
         // if the timeslot and date and both equal, that means they are the same appointment!
@@ -74,15 +69,11 @@ public class Appointment implements Comparable <Appointment> {
 
     @Override
     public String toString() {
-        return "Date: " + this.date + " " + this.timeslot + " " + this.patient + " " + this.provider;
+        return this.date.toString() + " " + this.timeslot.toString() + " " + this.patient.toString() + " [" + this.provider.getProvider().toUpperCase() + ", " + this.provider.getLocation() + ", " + this.getLocationByProvider().getCounty() + this.getLocationByProvider().getZip() + ", " + this.getSpecialtyByProvider() + "]";
     }
 
     public void setTimeslot(Timeslot timeslot) {
         this.timeslot = timeslot;
-    }
-
-    public Profile getProfile() {
-        return this.patient;
     }
 
 
@@ -94,24 +85,20 @@ public class Appointment implements Comparable <Appointment> {
         return this.timeslot;
     }
 
+    public Profile getProfile() {
+        return this.patient;
+    }
+
     public Provider getProvider() {
         return this.provider;
     }
-    
-    public Location getLocation() {
-        return this.location;
+
+    public Location getLocationByProvider() {
+        return this.provider.getLocation();
     }
 
-    public Specialty getSpecialty()
-    {
-        return this.specialty;
+    public Specialty getSpecialtyByProvider() {
+        return this.provider.getSpecialty();
     }
-
-    public static void main(String [] args) {
-        for(int i = 0; i<5; i++) {
-            //DELETE THIS
-        }
-    }
-
 
 }
