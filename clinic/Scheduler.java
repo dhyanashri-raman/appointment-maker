@@ -5,6 +5,8 @@ import java.util.Scanner;
 //CHECK FOR EMPTY LINES
 
 public class Scheduler {
+    List appts = new List();
+
     public void run() {
         System.out.println("Scheduler is running");
         Scanner in = new Scanner(System.in);
@@ -17,7 +19,6 @@ public class Scheduler {
         }
 
         String [] splittedInput = input.split(",");
-        List appts = new List();
         
         while(!splittedInput[0].equals("Q")) {
             if (splittedInput.length==7 || splittedInput.length==1) {
