@@ -121,14 +121,11 @@ public class Scheduler {
     }
 
     public void cancel(String [] splittedInput) {
-        for (int i=0; i<appointments.length; i++) {
-
-        }
-        // DELETE THIS
+        
 
     }
 
-    public void reschedule(String [] splittedInput) {
+    public String reschedule(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
         int day = Integer.parseInt(dateString[1]);
@@ -183,7 +180,6 @@ public class Scheduler {
             timeslot2 = Timeslot.SLOT6;
         }
 
-
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");
@@ -196,16 +192,18 @@ public class Scheduler {
 
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
-        Appointment appt = new Appointment(date, timeslot1, profile, provider, location, specialty);
-        int apptIndex = appts.find(appt); // returns index where that appointment was found - having error with private
-        if (apptIndex!=-1) {
-            appts[apptIndex].setTimeslot(timeslot2);
-        }
-        // adding the appointment if that appointment does not already exist
-        else {
-            appts.add(appt);
-        }
+        int apptIndex = appts.identifyAppointment(profile, date, timeslot1); // returns index where that appointment was found - having error with private
+        Appointment appt = new Appointment(appts.getAppointment(apptIndex).getDate(), appts.getAppointment(apptIndex).getTimeslot(), appts.getAppointment(apptIndex).getProfile(), appts.getAppointment(apptIndex).getProvider(), appts.getAppointment(apptIndex).getLocation(), appts.getAppointment(apptIndex).getSpecialty());
 
+        if (apptIndex != -1) {
+            for (int i = 0; i < appts.getSize(); i++) {
+                if (appts.getAppointment(i).getTimeslot().equals(timeslot2)) {
+                    return "TIMESLOT TAKEN, CANNOT RESCHEDULE";
+                }
+            }
+            appts.getAppointment(apptIndex).setTimeslot(timeslot2);
+        }
+        return "Rescheduled appointment!";
     }
 
 }
