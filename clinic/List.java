@@ -11,7 +11,7 @@ public class List {
     }
 
     // finding appointment based on profile and date
-    private int find(Profile profile, Date date, Timeslot timeslot) {
+    private int identifyAppointment(Profile profile, Date date, Timeslot timeslot) {
         //helper method
         for (int i =0; i<appointments.length; i++) {
             if (appointments[i].getProfile().equals(profile)) {
