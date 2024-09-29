@@ -15,10 +15,10 @@ public class Scheduler {
                 schedule(splittedInput); // taking all values except first one
             }
             else if (splittedInput[0].equals("C")) {
-                cancel(input);
+                cancel(splittedInput);
             }
             else if (splittedInput[0].equals("R")) {
-                reschedule(input);
+                reschedule(splittedInput);
             }
             else if (splittedInput[0].equals("PA")) {
                 appts.printByAppointment();
@@ -31,7 +31,7 @@ public class Scheduler {
             }
             // FIGURE OUT THIS ONE
             else if (splittedInput[0].equals("PS")) {
-                appts.getPatient().getTotalCharge();
+                appts.getProfile().getTotalCharge();
             }
             input = in.nextLine();
             splittedInput = input.split(",");
@@ -120,19 +120,24 @@ public class Scheduler {
         appts.add(appt);
     }
 
+    
+
     public String cancel(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
         int day = Integer.parseInt(dateString[1]);
         int year = Integer.parseInt(dateString[2]);
         String providerName = splittedInput[6];
-
+    
+    
         Specialty specialty = null;
         Location location = null;
         Provider provider = null;
-
+    
+    
         Date date = new Date(year, month, day);
-
+    
+    
         Timeslot timeslot1 = null;
         int time = Integer.parseInt(splittedInput[2]);
         if (time==1) {
@@ -153,7 +158,8 @@ public class Scheduler {
         else if (time==6) {
             timeslot1 = Timeslot.SLOT6;
         }
-
+    
+    
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");
@@ -164,7 +170,8 @@ public class Scheduler {
         Date dob = new Date(dobYear, dobMonth, dobDay);
         Profile profile = new Profile(firstName, lastName, dob);
         // date, timeslot, patient's first name, last name, dob, provider's last name
-
+    
+    
         if (appts.identifyAppointment(profile, date, timeslot1) != -1)
         {
             int inptApp = appts.identifyAppointment(profile, date, timeslot1);
@@ -173,10 +180,11 @@ public class Scheduler {
             appts.remove(appointment);
             return "Appointment Removed";
         }
-        return "Unsucessful: Appointment does not exist";
+        return "Unsuccessful: Appointment does not exist";
     }
+ 
 
-    public void reschedule(String [] splittedInput) {
+    public String reschedule(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
         int day = Integer.parseInt(dateString[1]);
@@ -231,7 +239,6 @@ public class Scheduler {
             timeslot2 = Timeslot.SLOT6;
         }
 
-
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");
@@ -244,16 +251,18 @@ public class Scheduler {
 
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
-        Appointment appt = new Appointment(date, timeslot1, profile, provider, location, specialty);
-        int apptIndex = appts.find(appt); // returns index where that appointment was found - having error with private
-        if (apptIndex!=-1) {
-            appts[apptIndex].setTimeslot(timeslot2);
-        }
-        // adding the appointment if that appointment does not already exist
-        else {
-            appts.add(appt);
-        }
+        int apptIndex = appts.identifyAppointment(profile, date, timeslot1); // returns index where that appointment was found - having error with private
+        Appointment appt = new Appointment(appts.getAppointment(apptIndex).getDate(), appts.getAppointment(apptIndex).getTimeslot(), appts.getAppointment(apptIndex).getProfile(), appts.getAppointment(apptIndex).getProvider(), appts.getAppointment(apptIndex).getLocation(), appts.getAppointment(apptIndex).getSpecialty());
 
+        if (apptIndex != -1) {
+            for (int i = 0; i < appts.getSize(); i++) {
+                if (appts.getAppointment(i).getTimeslot().equals(timeslot2)) {
+                    return "TIMESLOT TAKEN, CANNOT RESCHEDULE";
+                }
+            }
+            appts.getAppointment(apptIndex).setTimeslot(timeslot2);
+        }
+        return "Rescheduled appointment!";
     }
 
 }

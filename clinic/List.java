@@ -10,6 +10,15 @@ public class List {
         size = 0;
     }
 
+    private int find(Appointment appointment) {
+        for (int i = 0; i<appointments.length; i++) {
+            if (appointments[i].equals(appointment)) {
+                return i;
+            }
+        }
+        return NOT_FOUND;
+    }
+
     // finding appointment based on profile and date
     public int identifyAppointment(Profile profile, Date date, Timeslot timeslot) {
         //helper method
@@ -24,6 +33,15 @@ public class List {
         }
         return NOT_FOUND;
     }
+
+    public Appointment getAppointment(int index) {
+        return appointments[index];
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     //helper method to increase the capacity by 4
     private void grow() {
         if (size == appointments.length)
@@ -127,6 +145,7 @@ public class List {
         }
     }
 
+    //CHECK
     public void printByStatement() {
         for (int i=0; i<appointments.length-1; i++) {
             appointments[i].getProfile().getCharge();
