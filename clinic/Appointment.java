@@ -89,8 +89,8 @@ public class Appointment implements Comparable <Appointment> {
         return this.date;
     }
 
-    public void setTimeslot(Timeslot timeslot) {
-        this.timeslot = timeslot;
+    public Timeslot getTimeslot() {
+        return this.timeslot;
     }
 
     public Specialty getSpecialty()

@@ -121,10 +121,6 @@ public class Scheduler {
     }
 
     public void cancel(String [] splittedInput) {
-        for (int i=0; i<appointments.length; i++) {
-
-        }
-        // DELETE THIS
 
     }
 
