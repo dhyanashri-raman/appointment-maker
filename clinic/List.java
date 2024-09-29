@@ -132,8 +132,13 @@ public class List {
             appointments[i].getProfile().getCharge();
         }
 
+        for (int i= 0; i<appointments.length-1; i++) {
+
+        }
+
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
         }
+
     }
 }
