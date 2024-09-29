@@ -5,18 +5,23 @@ import java.util.Scanner;
 //CHECK FOR EMPTY LINES
 
 public class Scheduler {
-    public Scheduler() {
-
-    }
-    Scanner in = new Scanner(System.in);
-    String input = in.nextLine();
-    String [] splittedInput = input.split(",");
-    List appts = new List();
-
     public void run() {
         System.out.println("Scheduler is running");
-        if (splittedInput.length!=7) {
-            while(!splittedInput[0].equals("Q")) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter input: ");
+        String input = in.nextLine().trim();
+
+        if (input.isEmpty()) {
+            System.out.println("Invalid command.");
+            return; // Exit method as there is no valid input to process
+        }
+
+        String [] splittedInput = input.split(",");
+        List appts = new List();
+        
+        while(!splittedInput[0].equals("Q")) {
+            if (splittedInput.length==7 || splittedInput.length==1) {
+                
                 if (splittedInput[0].equals("S")) { // date, timeslot, patient's first name, last name, dob, provider's last name
                     schedule(splittedInput); 
                 }
@@ -25,6 +30,9 @@ public class Scheduler {
                 }
                 else if (splittedInput[0].equals("R")) {
                     reschedule(splittedInput);
+                }
+                else if (appts.getSize()==0) {
+                    System.out.println("The schedule calendar is empty.");
                 }
                 else if (splittedInput[0].equals("PA")) {
                     appts.printByAppointment();
@@ -44,9 +52,6 @@ public class Scheduler {
                 input = in.nextLine();
                 splittedInput = input.split(",");
             }
-        }
-        else {
-            System.out.println("Invalid command.");
         }
         System.out.println("Scheduler terminated.");
     }
