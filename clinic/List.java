@@ -63,7 +63,7 @@ public class List {
     public void add(Appointment appointment)  {
         //make sure the array is not full yet
         //make sure the appointment is not taken
-        if(!appointments.contains(appointment)) {
+        if(!contains(appointment)) {
             if(size != appointments.length) {
                 appointments[size] = appointment;
                 size++;
@@ -76,14 +76,18 @@ public class List {
         }
     }
     public void remove(Appointment appointment) {
-        for(int i = 0; i < size; i++)
-        {
-            if (appointments[i].equals(appointment))
-            {
-                appointments[i] = null;
-                size--;
-            }
-        }
+       if(contains(appointment))
+       {
+           for(int i = 0; i < size; i++)
+           {
+               if (appointments[i].equals(appointment))
+               {
+                   appointments[i] = null;
+                   size--;
+               }
+           }
+       }
+
 
     }
     //ordered by patient profile, date/timeslot
@@ -143,23 +147,5 @@ public class List {
         for (int i=0; i<appointments.length; i++) {
             System.out.print(appointments[i] + ", ");
         }
-    }
-
-    //CHECK
-    public void printByStatement() {
-        for (int i=0; i<appointments.length-1; i++) {
-            appointments[i].getProfile().getPatient().getTotalCharge();
-        }
-
-
-        for (int i=0; i<appointments.length; i++) {
-            System.out.print(appointments[i] + ", ");
-        }
-
-        System.out.println("Patient: " + patient.toString());
-            System.out.println("Total Charge: $" + patient.getTotalCharge());
-            System.out.println("--------------------------------");
-
-
     }
 }
