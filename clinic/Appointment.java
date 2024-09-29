@@ -85,6 +85,7 @@ public class Appointment implements Comparable <Appointment> {
         return this.patient;
     }
 
+
     public Date getDate() {
         return this.date;
     }
