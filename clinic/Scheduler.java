@@ -70,8 +70,6 @@ public class Scheduler {
                                 System.out.println("The schedule calendar is empty");
                             }
                             else {
-//                                appts.createMedicalRecord(patientRecords);
-//                                appts.printCharge(patientRecords);
                                 appts.printTotalCharges();
                             }
                             break;
