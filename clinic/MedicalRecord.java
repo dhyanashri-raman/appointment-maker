@@ -5,6 +5,14 @@ public class MedicalRecord {
     private int size; //number of patient objects in the array
 
 
+    public Patient[] getPatientArray()
+    {
+        return patients;
+    }
+    public int getPatientArrSize()
+    {
+        return size;
+    }
     public MedicalRecord()
     {
         patients = new Patient[4];
@@ -17,6 +25,16 @@ public class MedicalRecord {
             patients = new Patient[size + 4];
         }
     }
+
+    public Patient getPatient(int i)
+    {
+        if(size != 0)
+        {
+            return patients[i];
+        }
+        return null;
+    }
+
     public void add(Patient newPatient)  {
         //make sure the array is not full yet
         if(size != patients.length) {
@@ -29,6 +47,17 @@ public class MedicalRecord {
             grow();
             add(newPatient);
         }
+    }
+
+    public int containsPatient (Profile patient) {
+        for (int i = 0; i < size; i++)
+        {
+            if(patients[i].getProfileThroughPatient().equals(patient))
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

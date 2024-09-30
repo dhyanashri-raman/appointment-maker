@@ -46,6 +46,23 @@ public class Patient implements Comparable<Patient> {
         return appts;
     }
 
+    public void addVisit(Visit newVisit) {
+        if (visits == null) {
+            visits = newVisit;
+        } else {
+            Visit current = visits;
+            while (current.getVisit() != null) {
+                current = current.getVisit();
+            }
+            current.add(newVisit);
+        }
+    }
+
+    public Profile getProfileThroughPatient() {
+        return profile;
+    }
+
+
     //traverse the linked list to compute the charge
     public int getTotalCharge() {
         int totalCharge = 0;

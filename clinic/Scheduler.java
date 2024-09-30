@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Scheduler {
     List appts = new List();
+    MedicalRecord patientRecords = new MedicalRecord();
 
     public void run() {
         System.out.println("Scheduler is running");
@@ -64,7 +65,15 @@ public class Scheduler {
                             }
                             break;
                         case "PS":
-                            // Implement PS logic here
+                            if (appts.getSize() == 0)
+                            {
+                                System.out.println("The schedule calendar is empty");
+                            }
+                            else {
+//                                appts.createMedicalRecord(patientRecords);
+//                                appts.printCharge(patientRecords);
+                                appts.printTotalCharges();
+                            }
                             break;
                         default:
                             if (command.length() > 0 && Character.isLowerCase(command.charAt(0))) {
@@ -214,7 +223,21 @@ public class Scheduler {
         }
 
         appts.add(appt);
+        Patient patient = findOrCreatePatient(profile);
+        Visit newVisit = new Visit(appt);
+        patient.addVisit(newVisit);
+
         System.out.println(appt.toString() + " booked");
+    }
+
+    private Patient findOrCreatePatient(Profile profile) {
+        for (int i = 0; i < appts.getSize(); i++) {
+            Appointment appt = appts.getAppointment(i);
+            if (appt.getProfile().equals(profile)) {
+                return new Patient(profile, new Visit(appt));
+            }
+        }
+        return new Patient(profile, null);
     }
 
     public void cancel(String [] splittedInput) {
@@ -271,6 +294,21 @@ public class Scheduler {
             return;
         }
         System.out.println(date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " does not exist.");
+    }
+
+    public void printTotalCharges() {
+        if (appts.getSize() == 0) {
+            System.out.println("There are no appointments in the system.");
+            return;
+        }
+        System.out.println("Total charges for each patient:");
+        for (int i = 0; i < appts.getSize(); i++) {
+            Appointment appt = appts.getAppointment(i);
+            Profile profile = appt.getProfile();
+            Patient patient = findOrCreatePatient(profile);
+            int totalCharge = patient.getTotalCharge();
+            System.out.println(profile.toString() + ": $" + totalCharge);
+        }
     }
  
     public void reschedule(String [] splittedInput) {
