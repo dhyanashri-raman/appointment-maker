@@ -12,15 +12,20 @@ public class Scheduler {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter input: ");
         String input = in.nextLine().trim();
-
-        if (input.isEmpty()) {
-            System.out.println("Invalid command.");
-            return; // Exit method as there is no valid input to process
-        }
-
         String [] splittedInput = input.split(",");
-        
-        while(!splittedInput[0].equals("Q")) {
+
+
+        while(true) {
+            if(input.isEmpty())
+            {
+                input = in.nextLine();
+                splittedInput = input.split(",");
+            }
+            if(splittedInput[0].equals("Q"))
+            {
+                System.out.println("Scheduler terminated.");
+                return;
+            }
             if (splittedInput.length==7 || splittedInput.length==1) {
                 
                 if (splittedInput[0].equals("S")) { // date, timeslot, patient's first name, last name, dob, provider's last name
@@ -31,6 +36,10 @@ public class Scheduler {
                 }
                 else if (splittedInput[0].equals("R")) {
                     reschedule(splittedInput);
+                }
+                else if (Character.isLowerCase(splittedInput[0].charAt(0)) == true)
+                {
+                    System.out.println("Invalid command.");
                 }
                 else if (appts.getSize()==0) {
                     System.out.println("The schedule calendar is empty.");
@@ -45,7 +54,7 @@ public class Scheduler {
                     appts.printByLocation();
                 }
                 else if (splittedInput[0].equals("PS")) {
-                    
+                   ;
                 }
                 else {
                     System.out.println("Invalid command.");
@@ -54,7 +63,6 @@ public class Scheduler {
                 splittedInput = input.split(",");
             }
         }
-        System.out.println("Scheduler terminated.");
     }
 
     public void schedule(String [] splittedInput) {
@@ -63,6 +71,8 @@ public class Scheduler {
         int day = Integer.parseInt(dateString[1]);
         int year = Integer.parseInt(dateString[2]);
         String providerName = splittedInput[6];
+        providerName = splittedInput[6].toLowerCase();
+        providerName = Character.toString(Character.toUpperCase(providerName.charAt(0))) + providerName.substring(1);
 
         Specialty specialty = null;
         Location location = null;
@@ -75,12 +85,15 @@ public class Scheduler {
         }
         if (date.isToday() || date.isBeforeToday()) {
             System.out.println("Appointment date: " + date.toString() + " is today or a date before today.");
+            return;
         }
         if (date.onWeekend()) {
             System.out.println("Appointment date " + date.toString() + " is Saturday or Sunday.");
+            return;
         }
         if (!date.isWithinSixMonths()) {
             System.out.println("Appointment date " + date.toString() + " is not within six months.");
+            return;
         }
     
         Timeslot timeslot = null;
@@ -140,11 +153,6 @@ public class Scheduler {
         specialty = provider.getSpecialty();
         location = provider.getLocation();
 
-        if (appts.timeslotTaken(provider, timeslot)!=-1) {
-            System.out.println("Invalid command!");
-            return;
-        }
-
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");
@@ -154,7 +162,7 @@ public class Scheduler {
         Date dob = new Date(dobYear, dobMonth, dobDay);
         Profile profile = new Profile(firstName, lastName, dob);
 
-        if (dob.isValidDate()) {
+        if (!dob.isValidDate()) {
             System.out.println("Patient dob: " + dob.toString() + " is not a valid calendar date.");
             return;
         }
@@ -164,14 +172,17 @@ public class Scheduler {
             return;
         }
 
-        if (appts.patientExists(profile)) {
-            System.out.println("Invalid Command!");
+        if (appts.patientExists(profile) && appts.dateExists(date)) {
             return;
         }
 
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
         Appointment appt = new Appointment(date, timeslot, profile, provider);
+
+        if (appts.timeslotTaken(provider, timeslot)!=-1 && appts.dateExists(date)) {
+            return;
+        }
 
         appts.add(appt);
         System.out.println(appt.toString() + " booked");

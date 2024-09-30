@@ -69,7 +69,7 @@ public class Appointment implements Comparable <Appointment> {
 
     @Override
     public String toString() {
-        return this.date.toString() + " " + this.timeslot.toString() + " " + this.patient.toString() + " [" + this.provider.getProvider().toUpperCase() + ", " + this.provider.getLocation() + ", " + this.getLocationByProvider().getCounty() + this.getLocationByProvider().getZip() + ", " + this.getSpecialtyByProvider() + "]";
+        return this.date.toString() + " " + this.timeslot.toString() + " " + this.patient.toString() + " [" + this.provider.getProvider().toUpperCase() + ", " + this.provider.getLocation() + ", " + this.getLocationByProvider().getCounty() + " " + this.getLocationByProvider().getZip() + ", " + this.getSpecialtyByProvider() + "]";
     }
 
     public void setTimeslot(Timeslot timeslot) {

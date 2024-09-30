@@ -154,9 +154,19 @@ public class List {
     public boolean patientExists(Profile patient) {
         for (int i = 0; i<size; i++) {
             if (appointments[i].getProfile().equals(patient)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    public boolean dateExists (Date date)
+    {
+        for(int i = 0; i < size; i++)
+        {
+            if(appointments[i].getDate().equals(date))
+                return true;
+        }
+        return false;
     }
 }

@@ -30,7 +30,7 @@ public class Date implements Comparable<Date> {
         // make sure day is >=1
 
         // checking to make sure year, month and day inputs are greater than 1
-        if (this.year < 0 || (this.month < 0 || this.month > 12) || this.day < 0) {
+        if (this.year < 1 || (this.month < 1 || this.month > 12) || this.day < 1) {
             return false;
         }
         // checking to make sure all months with 31 days are <31, and same for months
@@ -78,22 +78,24 @@ public class Date implements Comparable<Date> {
         Calendar calendar = Calendar.getInstance();
         calendar.setLenient(false);
         return (this.year == calendar.get(Calendar.YEAR)
-                && this.month == calendar.get(Calendar.MONTH)
+                && this.month == (calendar.get(Calendar.MONTH) + 1)
                 && this.day == calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     // HELPER METHOD 3: checking to see if the date is before today
     public boolean isBeforeToday() {
+        Calendar today = Calendar.getInstance();
+        today.setLenient(false);
 
-        if (this.year < Calendar.YEAR) {
+        if (this.year < today.get(Calendar.YEAR)) {
             return true;
-        } else if (this.month < Calendar.MONTH) {
-            return true;
-        } else if (this.day < Calendar.DAY_OF_MONTH) {
-            return true;
+        } else if (this.year == today.get(Calendar.YEAR)) {
+            if (this.month < today.get(Calendar.MONTH) + 1) {
+                return true;
+            } else if (this.month == today.get(Calendar.MONTH) + 1) {
+                return this.day < today.get(Calendar.DAY_OF_MONTH);
+            }
         }
-        // if all these if statements are false that means the date is after the current
-        // date so we return true
         return false;
     }
 
@@ -110,15 +112,18 @@ public class Date implements Comparable<Date> {
     // HELPER METHOD 5: checking to make sure the date is within 6 months from
     // current date
     public boolean isWithinSixMonths() {
-        // creating an appointment date with this object's year, month, and day
+        Calendar today = Calendar.getInstance();
+        today.setLenient(false);
+
         Calendar appointmentDate = new Calendar.Builder()
                 .setDate(this.year, this.month - 1, this.day)
                 .build();
-        // creating an appointment date 6 months from now
-        Calendar sixMonthsLater = new Calendar.Builder()
-                .setDate(this.year, this.month - 1 + 6, this.day)
-                .build();
-        return appointmentDate.before(sixMonthsLater);
+
+        Calendar sixMonthsLater = Calendar.getInstance();
+        sixMonthsLater.setLenient(false);
+        sixMonthsLater.add(Calendar.MONTH, 6);
+
+        return !appointmentDate.before(today) && !appointmentDate.after(sixMonthsLater);
     }
 
     // HELPER METHOD 6
