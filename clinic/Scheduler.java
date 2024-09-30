@@ -14,7 +14,7 @@ public class Scheduler {
         String input = in.nextLine().trim();
         String [] splittedInput = input.split(",");
 
-
+        System.out.println();
         while(true) {
             input = in.nextLine();
             splittedInput = input.split(",");
@@ -77,7 +77,7 @@ public class Scheduler {
                             break;
                     }
                 } else {
-                    System.out.println("Invalid command: empty input.");
+
                 }
             }
         }
@@ -198,18 +198,18 @@ public class Scheduler {
             System.out.println("Patient dob: " + dob.toString() + " is today or a date after today.");
             return;
         }
-//
-//        if (appts.patientExists(profile) != -1 && (appts.dateExists(date) != -1)) {
-//            System.out.println("Patient dob: " + dob.toString() + " is today or a date after today.");
-//            return;
-//        }
-
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
         Appointment appt = new Appointment(date, timeslot, profile, provider);
 
-        if (appts.timeslotTaken(provider, timeslot) != -1 && appts.dateExists(date) != -1) {
-            System.out.println(appts.getAppointment(appts.timeslotTaken(provider, timeslot)).getProfile().toString() + " has an existing appointment at the same timeslot :(");
+        if (appts.timeslotTakenByPatient(provider, timeslot, profile) != -1 && appts.dateExists(date) != -1) {
+            System.out.println(appts.getAppointment(appts.timeslotTakenByPatient(provider, timeslot, profile)).getProfile().toString() + " has an existing appointment at the same timeslot.");
+            return;
+        }
+        else if (appts.timeslotTaken(provider, timeslot) != -1 && appts.dateExists(date) != -1) {
+            Appointment app = appts.getAppointment(appts.timeslotTaken(provider, timeslot));
+            System.out.println(app.getProvider().toString() + " is not available at slot " + splittedInput[2]);
+            //System.out.println("[" + app.getProvider() + ", " + app.getProvider().getLocation() + ", " + app.getProvider().getLocation().getCounty() + " " + app.getProvider().getLocation().getZip() + ", " + app.getProvider().getSpecialty() + "] is not available at slot " + timeslot);
             return;
         }
 
@@ -217,8 +217,7 @@ public class Scheduler {
         System.out.println(appt.toString() + " booked");
     }
 
-
-    public String cancel(String [] splittedInput) {
+    public void cancel(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
         int day = Integer.parseInt(dateString[1]);
@@ -268,12 +267,13 @@ public class Scheduler {
             Appointment currApp = appts.getAppointment(inptApp);
             Appointment appointment = new Appointment(currApp.getDate(), currApp.getTimeslot(), currApp.getProfile(), currApp.getProvider());
             appts.remove(appointment);
-            return date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " has been canceled.";
+            System.out.println(date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " has been canceled.");
+            return;
         }
-        return date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " does not exist.";
+        System.out.println(date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " does not exist.");
     }
  
-    public String reschedule(String [] splittedInput) {
+    public void reschedule(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
         int day = Integer.parseInt(dateString[1]);
@@ -307,31 +307,33 @@ public class Scheduler {
             timeslot1 = Timeslot.SLOT6;
         }
         else {
-            return splittedInput[2] + " is not a valid time slot.";
+            System.out.println(splittedInput[2] + " is not a valid time slot.");
+            return;
         }
 
         Timeslot timeslot2 = null;
         int time2 = Integer.parseInt(splittedInput[6]);
-        if (time==1) {
+        if (time2==1) {
             timeslot2 = Timeslot.SLOT1;
         }
-        else if (time==2) {
+        else if (time2==2) {
             timeslot2 = Timeslot.SLOT2;
         }
-        else if (time==3) {
+        else if (time2==3) {
             timeslot2 = Timeslot.SLOT3;
         }
-        else if (time==4) {
+        else if (time2==4) {
             timeslot2 = Timeslot.SLOT4;
         }
-        else if (time==5) {
+        else if (time2==5) {
             timeslot2 = Timeslot.SLOT5;
         }
-        else if (time==6) {
+        else if (time2==6) {
             timeslot2 = Timeslot.SLOT6;
         }
         else {
-            return splittedInput[2] + " is not a valid time slot.";
+            System.out.println(splittedInput[6] + " is not a valid time slot.");
+            return;
         }
 
         String firstName = splittedInput[3];
@@ -347,18 +349,19 @@ public class Scheduler {
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
         int apptIndex = appts.identifyAppointment(profile, date, timeslot1); // returns index where that appointment was found - having error with private
-        Appointment appt = new Appointment(appts.getAppointment(apptIndex).getDate(), appts.getAppointment(apptIndex).getTimeslot(), appts.getAppointment(apptIndex).getProfile(), appts.getAppointment(apptIndex).getProvider());
         int clashingIndex = appts.timeslotTaken(provider, timeslot2);
 
         if (apptIndex != -1) {
             if (clashingIndex!=-1) {
-                System.out.println(appts.getAppointment(clashingIndex).getProfile().getFirstName() + " " + appts.getAppointment(clashingIndex).getProfile().getLastName() + " " + appts.getAppointment(clashingIndex).getProfile().getDob().toString() + " has an existing appointment at the same time slot.");
+                System.out.println(appts.getAppointment(clashingIndex).getProfile().getFirstName() + " " + appts.getAppointment(clashingIndex).getProfile().getLastName() + " " + appts.getAppointment(clashingIndex).getProfile().getDob().toString() + " does not exist.");
+                return;
             }
             else {
                 appts.getAppointment(apptIndex).setTimeslot(timeslot2);
+                System.out.println("Rescheduled to " + appts.getAppointment(apptIndex).toString());
             }
         }
-        return appt.toString() + " booked";
+
     }
 
 }

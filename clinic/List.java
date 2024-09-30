@@ -44,116 +44,137 @@ public class List {
 
     //helper method to increase the capacity by 4
     private void grow() {
-        if (size == appointments.length)
-        {
-            appointments = new Appointment[size+4];
+        Appointment[] newAppointments = new Appointment[appointments.length + 4];
+        for (int i = 0; i < size; i++) {
+            newAppointments[i] = appointments[i];
         }
+        appointments = newAppointments;
     }
+
     //check before add/remove
-    public boolean contains(Appointment appointment)  {
-        for(int i = 0; i < size; i++)
-        {
-            if (appointments[i].equals(appointment))
-            {
+    public boolean contains(Appointment appointment) {
+        if (appointment == null) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (appointments[i] != null && appointments[i].equals(appointment)) {
                 return true;
             }
         }
         return false;
     }
-    public void add(Appointment appointment)  {
-        //make sure the array is not full yet
-        //make sure the appointment is not taken
-        if(!contains(appointment)) {
-            if(size != appointments.length) {
-                appointments[size] = appointment;
-                size++;
-            }
-            else
-            {
-                grow();
-                add(appointment);
-            }
+
+    public void add(Appointment appointment) {
+        if (size == appointments.length) {
+            grow();
+        }
+        if (!contains(appointment)) {
+            appointments[size] = appointment;
+            size++;
         }
     }
+
     public void remove(Appointment appointment) {
-        for(int i = 0; i < size; i++)
-        {
-            if (appointments[i].equals(appointment))
-            {
-                appointments[i] = null;
+        for (int i = 0; i < size; i++) {
+            if (appointments[i].equals(appointment)) {
+                for (int j = i; j < size - 1; j++) {
+                    appointments[j] = appointments[j + 1];
+                }
+                appointments[size - 1] = null;
                 size--;
+                return;
             }
         }
-
     }
-    //ordered by patient profile, date/timeslot
-    // sorting using the compareTo method ascending - ask about this just in case
-    public void printByPatient() {
-        //we need to use the compareTo method in profile to compare the values
-        for (int i=0; i<size - 1; i++) {
-            for (int j = 0; j < i-1; j++) {
-                if (appointments[j].compareTo(appointments[j+1])>0) {
-                    Appointment temp = appointments[j];
-                    appointments[j] = appointments[j + 1];
-                    appointments[j + 1] = temp;
-                }
-            }
-        }
 
-        for (int i=0; i<size; i++) {
-            System.out.print(appointments[i] + ", ");
-        }
-    }
-    //ordered by county, date/timeslot
-    public void printByLocation() {
-        //we need to use the compareTo method in profile to compare the values
-        for (int i=0; i<size - 1; i++) {
-            for (int j = 0; j < i-1; j++) {
-                if (appointments[j].compareByLocation(appointments[j+1])>0) {
-                    Appointment temp = appointments[j];
-                    appointments[j] = appointments[j + 1];
-                    appointments[j + 1] = temp;
-                }
-            }
-        }
-
-        for (int i=0; i<size; i++) {
-            System.out.print(appointments[i] + ", ");
-        }
-    }
-    //ordered by date/timeslot, provider name
     public void printByAppointment() {
-        //we need to use the compareTo method in profile to compare the values
-        boolean didSwap;
+        System.out.println();
+        System.out.println("** Appointments ordered by date/time/provider **");
+        sortByAppointment();
+        printAppointments();
+        System.out.println("** end of list **");
+    }
 
-        for (int i=0; i<size-1; i++) {
-            didSwap = false;
-            for (int j = 0; j < i-1; j++) {
-                if (appointments[j].compareByAppointment(appointments[j+1])>0) {
-                    Appointment temp = appointments[j];
-                    appointments[j] = appointments[j + 1];
-                    appointments[j + 1] = temp;
+    public void printByPatient() {
+        System.out.println();
+        System.out.println("** Appointments ordered by patient/date/time **");
+        sortByPatient();
+        printAppointments();
+        System.out.println("** end of list **");
+    }
+
+    public void printByLocation() {
+        System.out.println();
+        System.out.println("** Appointments ordered by county/date/time **");
+        sortByLocation();
+        printAppointments();
+        System.out.println("** end of list **");
+    }
+
+    private void sortByAppointment() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (appointments[j].compareByAppointment(appointments[j + 1]) > 0) {
+                    swapAppointments(j, j + 1);
                 }
             }
         }
+    }
 
-        for (int i=0; i<size; i++) {
-            System.out.print(appointments[i] + ", ");
+    private void sortByPatient() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (appointments[j].compareTo(appointments[j + 1]) > 0) {
+                    swapAppointments(j, j + 1);
+                }
+            }
         }
     }
 
-    public int timeslotTaken(Provider provider, Timeslot timeslot) {
-        for (int i = 0; i<size; i++) {
-            if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot)) {
-                return i;
+    private void sortByLocation() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (appointments[j].compareByLocation(appointments[j + 1]) > 0) {
+                    swapAppointments(j, j + 1);
+                }
             }
+        }
+    }
+
+    private void swapAppointments(int i, int j) {
+        Appointment temp = appointments[i];
+        appointments[i] = appointments[j];
+        appointments[j] = temp;
+    }
+
+    private void printAppointments() {
+        for (int i = 0; i < size; i++) {
+            System.out.println(formatAppointment(appointments[i]));
+        }
+    }
+
+    private String formatAppointment(Appointment app) {
+        return String.format("%s %s %s %s %s %s",
+                app.getDate(),
+                app.getTimeslot(),
+                app.getProfile().getFirstName(),
+                app.getProfile().getLastName(),
+                app.getProfile().getDob(),
+                app.getProvider().toString().toUpperCase());
+        }
+
+        public int timeslotTaken(Provider provider, Timeslot timeslot) {
+            for (int i = 0; i<size; i++) {
+                if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot)) {
+                    return i;
+                }
         }
         return -1;
     }
 
-    public int patientExists(Profile patient) {
+    public int timeslotTakenByPatient(Provider provider, Timeslot timeslot, Profile patient) {
         for (int i = 0; i<size; i++) {
-            if (appointments[i].getProfile().equals(patient)) {
+            if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot) && appointments[i].getProfile().equals(patient)) {
                 return i;
             }
         }

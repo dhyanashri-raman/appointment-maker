@@ -57,7 +57,6 @@ public class Date implements Comparable<Date> {
 
     // HELPER METHOD 1: checking if the year is a leap year
     public boolean isLeapYear() {
-        boolean leapYearCheck;
         if (this.year % QUADRENNIAL == 0) {
             if (this.year % CENTENNIAL == 0) {
                 if (this.year % QUATERCENTENNIAL == 0) {

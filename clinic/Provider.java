@@ -18,6 +18,11 @@ public enum Provider {
         this.specialty = specialty;
     }
 
+    @Override
+    public String toString() {
+        return "[" + this.name().toUpperCase() + ", " + this.location.toString().toUpperCase() + ", " + this.location.getCounty() + " " + this.location.getZip() + ", " + this.specialty + "]";
+    }
+
     public Location getLocation() {
         return location;
     }
