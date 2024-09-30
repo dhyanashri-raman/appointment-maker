@@ -127,7 +127,7 @@ public class List {
     private void sortByPatient() {
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
-                if (appointments[j].compareTo(appointments[j + 1]) > 0) {
+                if (appointments[j].compareByPatient(appointments[j + 1]) > 0) {
                     swapAppointments(j, j + 1);
                 }
             }
@@ -171,7 +171,7 @@ public class List {
                 if (appointments[i].getProvider().equals(provider) && appointments[i].getTimeslot().equals(timeslot)) {
                     return i;
                 }
-        }
+            }
         return -1;
     }
 

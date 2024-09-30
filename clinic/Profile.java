@@ -75,6 +75,7 @@ public class Profile implements Comparable<Profile> {
     {
         return fname + " " + lname + " " + dob.toString();
     }
+
     //testbed main method for testing compareTo
     public static void main(String[] args) {
         Date date1 = new Date(2003, 11, 20);

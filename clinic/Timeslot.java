@@ -18,11 +18,13 @@ public enum Timeslot {
 
     @Override
     public String toString() {
-        if (hour>12) { //PM
-            return this.hour-12 + ":" + this.minute + "PM";
-        }
-        else { //AM
-            return this.hour + ":" + this.minute + "AM";
+        String minuteString = String.format("%02d", this.minute);
+        if (hour == 12) {
+            return "12:" + minuteString + " PM";
+        } else if (hour > 12) {
+            return (hour - 12) + ":" + minuteString + " PM";
+        } else {
+            return hour + ":" + minuteString + " AM";
         }
     }
 
