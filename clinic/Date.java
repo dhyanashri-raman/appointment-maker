@@ -30,7 +30,7 @@ public class Date implements Comparable<Date> {
         // make sure day is >=1
 
         // checking to make sure year, month and day inputs are greater than 1
-        if (this.year < 1 || (this.month < 1 || this.month > 12) || this.day < 1) {
+        if (this.year < 1 || this.month < 1 || this.month > 12 || this.day < 1) {
             return false;
         }
         // checking to make sure all months with 31 days are <31, and same for months
@@ -197,6 +197,28 @@ public class Date implements Comparable<Date> {
     }
 
     public static void main (String[]args) {
-        System.out.println("Testing Date class...");
+        Date testOne = new Date(2004, 1, 18);
+        boolean testOneWorked = testOne.isValidDate();
+        System.out.println(testOne.toString() + " is a valid date: " + testOneWorked);
+
+        Date testTwo = new Date(2025, 13, 30);
+        boolean testTwoWorked = testOne.isValidDate();
+        System.out.println(testTwo.toString() + " is a valid date: " + testTwoWorked);
+
+        Date testThree = new Date(1989, 0, 9);
+        boolean testThreeWorked = testThree.isValidDate();
+        System.out.println(testThree.toString() + " is a valid date: " + testThreeWorked);
+
+        Date testFour = new Date(2022, 5, 15); // June 15, 2022
+        boolean testFourWorked = testFour.isValidDate();
+        System.out.println(testFour.toString() + " is a valid date: " + testFourWorked);
+
+        Date testFive = new Date(2020, 11, 25); // December 25, 2020
+        boolean testFiveWorked = testFive.isValidDate();
+        System.out.println(testFive.toString() + " is a valid date: " + testFiveWorked);
+
+        Date testSix = new Date(2023, 3, 1); // April 1, 2023
+        boolean testSixWorked = testSix.isValidDate();
+        System.out.println(testSix.toString() + " is a valid date: " + testSixWorked);
     }
 }
