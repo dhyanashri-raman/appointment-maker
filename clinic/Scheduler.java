@@ -16,7 +16,9 @@ public class Scheduler {
 
 
         while(true) {
-            if(input.isEmpty())
+            input = in.nextLine();
+            splittedInput = input.split(",");
+            if(input.isEmpty() || splittedInput[0] == null)
             {
                 input = in.nextLine();
                 splittedInput = input.split(",");
@@ -26,41 +28,57 @@ public class Scheduler {
                 System.out.println("Scheduler terminated.");
                 return;
             }
-            if (splittedInput.length==7 || splittedInput.length==1) {
-                
-                if (splittedInput[0].equals("S")) { // date, timeslot, patient's first name, last name, dob, provider's last name
-                    schedule(splittedInput); 
+            if (splittedInput.length == 7 || splittedInput.length == 1) {
+                if (splittedInput.length > 0 && !splittedInput[0].isEmpty()) {
+                    String command = splittedInput[0];
+
+                    switch (command) {
+                        case "S":
+                            schedule(splittedInput);
+                            break;
+                        case "C":
+                            cancel(splittedInput);
+                            break;
+                        case "R":
+                            reschedule(splittedInput);
+                            break;
+                        case "PA":
+                            if (appts.getSize() == 0) {
+                                System.out.println("The schedule calendar is empty.");
+                            } else {
+                                appts.printByAppointment();
+                            }
+                            break;
+                        case "PP":
+                            if (appts.getSize() == 0) {
+                                System.out.println("The schedule calendar is empty.");
+                            } else {
+                                appts.printByPatient();
+                            }
+                            break;
+                        case "PL":
+                            if (appts.getSize() == 0) {
+                                System.out.println("The schedule calendar is empty.");
+                            } else {
+                                appts.printByLocation();
+                            }
+                            break;
+                        case "PS":
+                            // Implement PS logic here
+                            break;
+                        default:
+                            if (command.length() > 0 && Character.isLowerCase(command.charAt(0))) {
+                                System.out.println("Invalid command.");
+                            } else if (appts.getSize() == 0) {
+                                System.out.println("The schedule calendar is empty.");
+                            } else {
+                                return;
+                            }
+                            break;
+                    }
+                } else {
+                    System.out.println("Invalid command: empty input.");
                 }
-                else if (splittedInput[0].equals("C")) {
-                    cancel(splittedInput);
-                }
-                else if (splittedInput[0].equals("R")) {
-                    reschedule(splittedInput);
-                }
-                else if (Character.isLowerCase(splittedInput[0].charAt(0)) == true)
-                {
-                    System.out.println("Invalid command.");
-                }
-                else if (appts.getSize()==0) {
-                    System.out.println("The schedule calendar is empty.");
-                }
-                else if (splittedInput[0].equals("PA")) {
-                    appts.printByAppointment();
-                }
-                else if (splittedInput[0].equals("PP")) {
-                    appts.printByPatient();
-                }
-                else if (splittedInput[0].equals("PL")) {
-                    appts.printByLocation();
-                }
-                else if (splittedInput[0].equals("PS")) {
-                   ;
-                }
-                else {
-                    System.out.println("Invalid command.");
-                }
-                input = in.nextLine();
-                splittedInput = input.split(",");
             }
         }
     }
@@ -95,30 +113,39 @@ public class Scheduler {
             System.out.println("Appointment date " + date.toString() + " is not within six months.");
             return;
         }
-    
+
         Timeslot timeslot = null;
-        int time = Integer.parseInt(splittedInput[2]);
-        if (time==1) {
-            timeslot = Timeslot.SLOT1;
-        }
-        else if (time==2) {
-            timeslot = Timeslot.SLOT2;
-        }
-        else if (time==3) {
-            timeslot = Timeslot.SLOT3;
-        }
-        else if (time==4) {
-            timeslot = Timeslot.SLOT4;
-        }
-        else if (time==5) {
-            timeslot = Timeslot.SLOT5;
-        }
-        else if (time==6) {
-            timeslot = Timeslot.SLOT6;
-        }
-        else {
+        int time;
+
+        try {
+            time = Integer.parseInt(splittedInput[2]);
+
+            switch (time) {
+                case 1:
+                    timeslot = Timeslot.SLOT1;
+                    break;
+                case 2:
+                    timeslot = Timeslot.SLOT2;
+                    break;
+                case 3:
+                    timeslot = Timeslot.SLOT3;
+                    break;
+                case 4:
+                    timeslot = Timeslot.SLOT4;
+                    break;
+                case 5:
+                    timeslot = Timeslot.SLOT5;
+                    break;
+                case 6:
+                    timeslot = Timeslot.SLOT6;
+                    break;
+                default:
+                    System.out.println(time + " is not a valid time slot.");
+                    return;
+            }
+        } catch (NumberFormatException e) {
             System.out.println(splittedInput[2] + " is not a valid time slot.");
-            return; 
+            return;
         }
 
         if(providerName.equals("Patel")) {
@@ -147,7 +174,7 @@ public class Scheduler {
         }
         else {
             System.out.println(providerName + " - provider doesn't exist.");
-            return; 
+            return;
         }
 
         specialty = provider.getSpecialty();
@@ -171,16 +198,18 @@ public class Scheduler {
             System.out.println("Patient dob: " + dob.toString() + " is today or a date after today.");
             return;
         }
-
-        if (appts.patientExists(profile) && appts.dateExists(date)) {
-            return;
-        }
+//
+//        if (appts.patientExists(profile) != -1 && (appts.dateExists(date) != -1)) {
+//            System.out.println("Patient dob: " + dob.toString() + " is today or a date after today.");
+//            return;
+//        }
 
 
         // date, timeslot, patient's first name, last name, dob, provider's last name
         Appointment appt = new Appointment(date, timeslot, profile, provider);
 
-        if (appts.timeslotTaken(provider, timeslot)!=-1 && appts.dateExists(date)) {
+        if (appts.timeslotTaken(provider, timeslot) != -1 && appts.dateExists(date) != -1) {
+            System.out.println(appts.getAppointment(appts.timeslotTaken(provider, timeslot)).getProfile().toString() + " has an existing appointment at the same timeslot :(");
             return;
         }
 
@@ -221,7 +250,7 @@ public class Scheduler {
         else if (time==6) {
             timeslot1 = Timeslot.SLOT6;
         }
-    
+
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");

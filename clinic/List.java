@@ -151,22 +151,22 @@ public class List {
         return -1;
     }
 
-    public boolean patientExists(Profile patient) {
+    public int patientExists(Profile patient) {
         for (int i = 0; i<size; i++) {
             if (appointments[i].getProfile().equals(patient)) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
-    public boolean dateExists (Date date)
+    public int dateExists (Date date)
     {
         for(int i = 0; i < size; i++)
         {
             if(appointments[i].getDate().equals(date))
-                return true;
+                return i;
         }
-        return false;
+        return -1;
     }
 }
