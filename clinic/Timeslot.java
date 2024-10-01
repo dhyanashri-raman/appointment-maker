@@ -1,5 +1,8 @@
 package clinic;
 
+/**
+ * Represents the time slots available for scheduling appointments.
+ */
 public enum Timeslot {
     SLOT1 (9, 0),
     SLOT2 (10, 45),
@@ -11,11 +14,20 @@ public enum Timeslot {
     private final int hour;
     private final int minute;
 
+    /**
+     * Constructor for the Timeslot enum.
+     * @param hour   The hour of the time slot.
+     * @param minute The minute of the time slot.
+     */
     Timeslot (int hour, int minute){
         this.hour = hour;
         this.minute = minute;
     }
 
+    /**
+     * Returns a string representation of the time slot in a 12-hour format.
+     * @return A formatted string representing the time of the slot.
+     */
     @Override
     public String toString() {
         String minuteString = String.format("%02d", this.minute);
@@ -27,5 +39,4 @@ public enum Timeslot {
             return hour + ":" + minuteString + " AM";
         }
     }
-
 }

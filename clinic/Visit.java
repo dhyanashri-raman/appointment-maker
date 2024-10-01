@@ -1,23 +1,43 @@
 package clinic;
 
+/**
+ * Represents a visit associated with an appointment.
+ * Each visit can reference the next visit in a linked list structure.
+ */
 public class Visit {
-    private Appointment appointment; //a reference to an appointment object
-    private Visit next; //a ref. to the next appointment object in the list
+    private Appointment appointment;
+    private Visit next;
 
+    /**
+     * Constructs a Visit with a specified appointment.
+     * @param appointment The appointment associated with this visit.
+     */
     public Visit(Appointment appointment) {
         this.appointment = appointment;
         this.next = null;
     }
 
+    /**
+     * Adds a new visit to the next reference of this visit.
+     * @param visit The visit to be added.
+     */
     public void add(Visit visit) {
-        this.next= visit;
+        this.next = visit;
     }
 
-    public Appointment getAppointment () {
+    /**
+     * Retrieves the appointment associated with this visit.
+     * @return The appointment of this visit.
+     */
+    public Appointment getAppointment() {
         return appointment;
     }
 
-    public Visit getVisit () {
+    /**
+     * Retrieves the next visit in the list.
+     * @return The next visit object, or null if there is none.
+     */
+    public Visit getVisit() {
         return next;
     }
 }

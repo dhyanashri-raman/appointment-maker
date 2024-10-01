@@ -2,13 +2,19 @@ package clinic;
 
 import java.util.Scanner;
 
+/**
+ * Represents a scheduler that manages appointment scheduling,
+ * cancellation, and rescheduling through user input.
+ */
 public class Scheduler {
     List appts = new List();
-
+    /**
+     * Runs the scheduler, prompting the user for commands
+     * to manage appointments.
+     */
     public void run() {
         System.out.println("Scheduler is running");
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter input: ");
         String input = in.nextLine().trim();
         String [] splittedInput = input.split(",");
         System.out.println();
@@ -79,6 +85,10 @@ public class Scheduler {
         }
     }
 
+    /**
+     * Schedules a new appointment based on user input.
+     * @param splittedInput An array containing the input parameters.
+     */
     public void schedule(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
@@ -192,12 +202,15 @@ public class Scheduler {
         else if (appts.timeslotTaken(provider, timeslot) != -1 && appts.dateExists(date) != -1) {
             Appointment app = appts.getAppointment(appts.timeslotTaken(provider, timeslot));
             System.out.println(app.getProvider().toString() + " is not available at slot " + splittedInput[2]);
-            //System.out.println("[" + app.getProvider() + ", " + app.getProvider().getLocation() + ", " + app.getProvider().getLocation().getCounty() + " " + app.getProvider().getLocation().getZip() + ", " + app.getProvider().getSpecialty() + "] is not available at slot " + timeslot);
             return;
         }
         appts.add(appt);
         System.out.println(appt.toString() + " booked.");
     }
+    /**
+     * Cancels an existing appointment based on user input.
+     * @param splittedInput An array containing the input parameters.
+     */
     public void cancel(String [] splittedInput) {
         String [] dateString = splittedInput[1].split("/");
         int month = Integer.parseInt(dateString[0]);
@@ -247,8 +260,12 @@ public class Scheduler {
         }
         System.out.println(date.toString() + " " + timeslot1.toString() + " " + profile.toString() + " does not exist.");
     }
+    /**
+     * Reschedules an existing appointment based on user input.
+     * @param splittedInput An array containing the input parameters.
+     */
     public void reschedule(String [] splittedInput) {
-        if (splittedInput.length < 7) { // Check that splittedInput has the correct number of elements
+        if (splittedInput.length < 7) {
             System.out.println("Invalid input length.");
             return;
         }
@@ -307,8 +324,6 @@ public class Scheduler {
                 System.out.println(time2 + " is not a valid time slot.");
                 return;
         }
-
-        // Get patient details from splittedInput
         String firstName = splittedInput[3];
         String lastName = splittedInput[4];
         String [] dobString = splittedInput[5].split("/");
@@ -326,13 +341,11 @@ public class Scheduler {
             System.out.println(splittedInput[1] + " " + timeslot1.toString() + " " + firstName + " " + lastName + " " + dob.toString() + " does not exist.");
             return;
         }
-        // Check if the new timeslot is taken
         int clashingIndex = appts.timeslotTaken(provider, timeslot2);
         if (clashingIndex != -1) {
             System.out.println(splittedInput[1] + " " + timeslot2.toString() + " " + firstName + " " + lastName + " " + dob.toString() + " does not exist.");
             return;
         }
-        // Update appointment to the new timeslot
         appts.getAppointment(apptIndex).setTimeslot(timeslot2);
         Appointment appointmentFinal = appts.getAppointment(apptIndex);
         System.out.println("Rescheduled to " + appointmentFinal.toString());
