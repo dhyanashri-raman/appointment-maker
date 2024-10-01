@@ -197,28 +197,28 @@ public class Date implements Comparable<Date> {
     }
 
     public static void main (String[]args) {
-        Date testOne = new Date(2004, 1, 18);
-        boolean testOneWorked = testOne.isValidDate();
+        Date testOne = new Date(2004, 1, 60);
+        boolean testOneWorked = testOne.isValid();
         System.out.println(testOne.toString() + " is a valid date: " + testOneWorked);
 
-        Date testTwo = new Date(2025, 13, 30);
-        boolean testTwoWorked = testOne.isValidDate();
+        Date testTwo = new Date(2024, 9, 28);
+        boolean testTwoWorked = testOne.isValid();
         System.out.println(testTwo.toString() + " is a valid date: " + testTwoWorked);
 
-        Date testThree = new Date(1989, 0, 9);
-        boolean testThreeWorked = testThree.isValidDate();
+        Date testThree = new Date(2025, 3, 9);
+        boolean testThreeWorked = testThree.isWithinSixMonths();
         System.out.println(testThree.toString() + " is a valid date: " + testThreeWorked);
 
-        Date testFour = new Date(2022, 5, 15); // June 15, 2022
-        boolean testFourWorked = testFour.isValidDate();
+        Date testFour = new Date(2024, 10, 15);
+        boolean testFourWorked = testFour.isValid();
         System.out.println(testFour.toString() + " is a valid date: " + testFourWorked);
 
-        Date testFive = new Date(2020, 11, 25); // December 25, 2020
-        boolean testFiveWorked = testFive.isValidDate();
+        Date testFive = new Date(2023, 9, 16);
+        boolean testFiveWorked = testFive.onWeekend();
         System.out.println(testFive.toString() + " is a valid date: " + testFiveWorked);
 
-        Date testSix = new Date(2023, 3, 1); // April 1, 2023
-        boolean testSixWorked = testSix.isValidDate();
+        Date testSix = new Date(2024, 3, 1);
+        boolean testSixWorked = testSix.isLeapYear();
         System.out.println(testSix.toString() + " is a valid date: " + testSixWorked);
     }
 }
