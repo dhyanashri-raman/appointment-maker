@@ -78,8 +78,19 @@ public class Profile implements Comparable<Profile> {
 
     //testbed main method for testing compareTo
     public static void main(String[] args) {
+        //three test cases return 1
+        //three test cases return -1
+        //one test case returns 0
         Date date1 = new Date(2003, 11, 20);
         Profile profile1 = new Profile("John", "Doe", date1);
+        Profile profile2 = new Profile("John", "Doe", date1);
+        System.out.println(profile1.toString() + " compared to " + profile2.toString() + " is: " + profile1.compareTo(profile2));
+
+        //compares the last names
+        Date date2 = new Date(1997, 1, 18);
+        Profile profile3 = new Profile("Jone", "Zoe", date2);
+        Profile profile4 = new Profile("John", "Doe", date2);
+
     }
 
 

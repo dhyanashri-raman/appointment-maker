@@ -58,7 +58,11 @@ public class Scheduler {
                             }
                             break;
                         case "PS":
-                            // Implement PS logic here
+                            if(appts.getSize() == 0) {
+                                System.out.println("The schedule calendar is empty.");
+                            } else {
+                                appts.printTotalCharges();
+                            }
                             break;
                         default:
                             if (command.length() > 0 && Character.isLowerCase(command.charAt(0))) {
