@@ -144,6 +144,16 @@ public class List {
         }
     }
 
+    private void sortByProfile() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (appointments[j].getProfile().compareTo(appointments[j + 1].getProfile()) > 0) {
+                    swapAppointments(j, j + 1);
+                }
+            }
+        }
+    }
+
     private void swapAppointments(int i, int j) {
         Appointment temp = appointments[i];
         appointments[i] = appointments[j];
@@ -194,17 +204,14 @@ public class List {
         return -1;
     }
 
-    public void printTotalCharges() {
+    public void printAllCharge() {
         if (size == 0) {
             System.out.println("There are no appointments in the system.");
             return;
         }
-
         System.out.println("** Billing statement ordered by patient **");
-
-        sortAppointmentsByPatient();
-
-        DecimalFormat df = new DecimalFormat("$#,##0.00");
+        sortByProfile();
+        DecimalFormat formatDec = new DecimalFormat("$#,##0.00");
         int counter = 1;
         Profile currentProfile = null;
         int currentCharge = 0;
@@ -219,7 +226,7 @@ public class List {
                     System.out.printf("(%d) %s [amount due: %s]%n",
                             counter++,
                             currentProfile.toString(),
-                            df.format(currentCharge));
+                            formatDec.format(currentCharge));
                 }
                 currentProfile = profile;
                 currentCharge = charge;
@@ -227,29 +234,13 @@ public class List {
                 currentCharge += charge;
             }
         }
-
         if (currentProfile != null) {
             System.out.printf("(%d) %s [amount due: %s]%n",
                     counter,
                     currentProfile.toString(),
-                    df.format(currentCharge));
+                    formatDec.format(currentCharge));
         }
-
         System.out.println("** end of list **");
     }
-
-    private void sortAppointmentsByPatient() {
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = 0; j < size - i - 1; j++) {
-                if (appointments[j].getProfile().compareTo(appointments[j + 1].getProfile()) < 0) {
-                    // Swap appointments
-                    Appointment temp = appointments[j];
-                    appointments[j] = appointments[j + 1];
-                    appointments[j + 1] = temp;
-                }
-            }
-        }
-    }
-
 
 }

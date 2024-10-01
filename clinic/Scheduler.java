@@ -61,7 +61,7 @@ public class Scheduler {
                             if(appts.getSize() == 0) {
                                 System.out.println("The schedule calendar is empty.");
                             } else {
-                                appts.printTotalCharges();
+                                appts.printAllCharge();
                             }
                             break;
                         default:
